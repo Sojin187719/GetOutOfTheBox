@@ -23,16 +23,27 @@ const database = app.database();
  
 
 
-const ref = database.ref('data/olivier');
-ref.on('child_changed', function(snapshot, data) {
-    console.log(`olivier ${snapshot.key}: ${snapshot.val()}`);
+// const ref = database.ref('data/olivier');
+// ref.on('child_changed', function(snapshot, data) {
+//     console.log(`olivier ${snapshot.key}: ${snapshot.val()}`);
 
-    if (snapshot.key === 'x') {
-        document.querySelector('#cursor').style.left = snapshot.val() + 'px';
-    }else {
-        document.querySelector('#cursor').style.top = snapshot.val() + 'px';
-    }
-});
+    // if (snapshot.key === 'x') {
+    //     document.querySelector('#cursor').style.left = snapshot.val() + 'px';
+    // }else {
+    //     document.querySelector('#cursor').style.top = snapshot.val() + 'px';
+    // }
+// });
+
+
+
+
+// var data = localStorage.getItem("userName");
+// alert(data);
+
+
+
+
+
 
 
 
