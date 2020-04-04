@@ -1,0 +1,17 @@
+#animatedDiv{
+	position:relative;
+	top:300px;
+	left:150px;
+}
+
+#cursorImg{
+	height:auto;
+	width:18;
+	background-image: url("resources/image/cursor.png");
+}
+#cursorTxt{
+	font-size:13px;
+	position:absolute;
+	left:0.5%;
+	top:-2%;
+}
