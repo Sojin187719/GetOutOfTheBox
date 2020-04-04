@@ -3,52 +3,51 @@ body{
     padding: 0;
     font-family: sans-serif;
     background: #34495e;
+    width: 190px;
+    height: 145px;
 }
 
 .box{
-    width: 200px;
-    padding: 200px;
+    height: 82px;
+    width: 103px;
+    padding: 50px;
     position: absolute;
-    top: 10%;
-    left: 30%;
     background: #191919;
-    text-align: center;
 }
 
 .box H3{
-    margin-left: 15%;
+    margin-top: -38px;
+    margin-left: -8px;
     color: white;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 50px;
 }
 
-.box input[type = "text"]{
-    margin-left: 20%;
+.username{
     border: 0;
     background: none;
     display: block;
-    margin: 20px auto;
-    text-align: center;
+    margin-left: -15px;
+    text-align: left;
     border: 2px solid #3498DB;
     padding: 10% 10%;
-    width: 200px;
     outline: none;
+    width: 100px;
     color: white;
     border-radius: 24px;
     transition: 0.25s;
 }
 
-.box input[type = "text"]:focus{
-    width: 200px;
+.username:focus{
+    width: 100px;
     border-color: #2ECC71;
 }
 
-.box input[type = "submit"]{
+.button{
+    margin-top: 10px;
+    margin-left: 12px;
     border: 0;
     background: none;
     display: block;
-    margin: 20px auto;
-    margin-left: 38%;
     text-align: center;
     border: 2px solid #2ECC71;
     padding: 10% 10%;
@@ -59,6 +58,6 @@ body{
     cursor: pointer;
 }
 
-.box input[type = "submit"]:hover{
+.button:hover{
     background: #2ECC71;
 }
