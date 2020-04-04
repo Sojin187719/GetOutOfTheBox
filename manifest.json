@@ -9,17 +9,19 @@
     "content_scripts": [
         {
           "matches": ["http://*/*", "https://*/*", "file:///*/*"],
-          "js": ["js/content-script.js"],
-          "all_frames": true
+          "js": ["js/firebase-app.js", "js/firebase-database.js", "js/content-script.js"],
+          "all_frames": true,
+          "html":[]
         }
       ],
       "background": {
-        "scripts": ["js/popup.js"]
+        "scripts": ["js/BackGround.js"]
       },
     "browser_action": { 
       "default_icon": "resources/image/icone128.png",
-      "__default_popup": "html/popup.html"
+      "default_popup": "html/popup.html"
     },
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'; connect-src 'self' wss://*.firebaseio.com;",
     "permissions": [
       "tabs",
       "http://*/*",
