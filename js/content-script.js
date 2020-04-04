@@ -1,7 +1,10 @@
 
 var isSleeping = false;
 var cursorList = [];
+var localURL = location;
+var interval = 1000;
 var id = 0;
+
 
 var firebaseConfig = {
     apiKey: "AIzaSyBl6wXfdx33ui2MJ5tnTJUkVgmknleZpUU",
@@ -17,12 +20,25 @@ var firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const database = app.database();
  
+const div = document.createElement('div');
+        div.id = "cursor";
+        div.innerHTML = 'lala';
+        div.style.position = 'fixed';
+        document.body.appendChild(div);
+        
+
 const ref = database.ref('data/olivier');
 ref.on('child_changed', function(snapshot, data) {
   console.log(`olivier ${snapshot.key}: ${snapshot.val()}`);
+
+  if (snapshot.key === 'x') {
+    document.querySelector('#cursor').style.left = snapshot.val() + 'px';
+} else {
+    document.querySelector('#cursor').style.top = snapshot.val() + 'px';
+}
+
 });
 
-createCursor("Me",0,0);
 
 
 const coord =  async function(e){
@@ -30,10 +46,11 @@ const coord =  async function(e){
     isSleeping = true
     var x = e.pageX;
     var y = e.pageY;
+    if(getCursor("Me")==null) createCursor("Me",x,y);
     getCursor("Me").x=x;
     getCursor("Me").y=y;
-    animList();
-    await sleep(1000);
+    moveCursor(getCursor("Me"))
+    await sleep(interval);
     isSleeping = false;
 };
 
@@ -49,18 +66,37 @@ function getCursor(id) {
     }
     return null;
 }
-
 function createCursor(cursorId, cursorX, cursorY){
-    var cursor = {id: cursorId, x: cursorX, y: cursorY};
+    var mainDiv =document.createElement("div");
+    mainDiv.name=cursorId;
+    mainDiv.style.position="absolute";
+    mainDiv.style.pointerEvents="none";
+    var img = document.createElement("img");
+    img.src="https://openclipart.org/download/222074/White-Pixel-Mouse-Cursor-Arow-Fixed.svg";
+    img.style.width="9px";
+    img.style.height="auto";
+    var p = document.createElement("p");
+    p.style.fontSize ="13px";
+    p.style.position ="absolute";
+    p.style.top ="0%";
+    p.style.left ="75%";
+    var node = document.createTextNode(cursorId);
+    p.appendChild(node);
+    mainDiv.appendChild(img);
+    mainDiv.appendChild(p);
+    var cursor = {id: cursorId, x: cursorX, y: cursorY,docElement: mainDiv};
     cursorList.push(cursor);
-    document.body.innerHTML+="<div name="+cursor.id+" id='animatedDiv'><img id='cursorImg'><p id='cursorTxt'>"+cursor.id+"</p></div>";
+    document.body.appendChild(mainDiv);
 }
 
 function deleteCursor(cursorId){
-    cursorList.splice(cursorList.indexOf(getCursor(cursorId)), 1);
+    var cursor = getCursor(cursorId);
+    cursorList.splice(cursorList.indexOf(cursor), 1);
+    document.body.removeChild(cursor.docElement);
 }
 
-function animList(){
+
+function moveCursor(){
     for(i = 0 ; i<cursorList.length ; i++){
         cursor = cursorList[i];
         console.log("id : "+cursor.id+" | x: "+cursor.x+" | y: "+cursor.y);
@@ -75,8 +111,8 @@ function animList(){
                 console.log('what!?');
             }
         });
-        document.getElementsByName(cursor.id)[0].style.left = cursor.x-8;
-        document.getElementsByName(cursor.id)[0].style.top = cursor.y-8;
+        cursor.docElement.style.top = cursor.y-8;
+        cursor.docElement.style.left = cursor.x-8;
     }
 }
 
