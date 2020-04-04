@@ -1,9 +1,8 @@
 
 document.getElementById('buttonUSER').addEventListener('click', function () { 
     // Enregistrer des données dans sessionStorage
-    localStorage.userName =  document.getElementById('username').value;
 
-    var data = localStorage.getItem("userName");
-        alert(data);
+    chrome.storage.sync.set({'userName' : document.getElementById('username').value});
+
 
 },false);   

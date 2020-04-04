@@ -1,11 +1,17 @@
-
 var isSleeping = false;
 var cursorList = [];
-var localURL = location;
+var localURL = location.href;
 var interval = 1000;
 var id = 0;
+var myUser= [""] ;
 
-createCursor("Me",0,0);
+chrome.storage.sync.get(['userName'],function(item){
+    myUser = item.userName;
+});
+
+
+
+
 
 var firebaseConfig = {
     apiKey: "AIzaSyBl6wXfdx33ui2MJ5tnTJUkVgmknleZpUU",
@@ -21,46 +27,44 @@ var firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const database = app.database();
  
-
-
-// const ref = database.ref('data/olivier');
-// ref.on('child_changed', function(snapshot, data) {
-//     console.log(`olivier ${snapshot.key}: ${snapshot.val()}`);
-
-    // if (snapshot.key === 'x') {
-    //     document.querySelector('#cursor').style.left = snapshot.val() + 'px';
-    // }else {
-    //     document.querySelector('#cursor').style.top = snapshot.val() + 'px';
-    // }
-// });
-
-
-
-
-// var data = localStorage.getItem("userName");
-// alert(data);
-
-
-
-
-
-
-
+const ref = database.ref('data');
+ref.on('child_changed', function(snapshot, data) {
+	var user = `${snapshot.key}`;
+	var x = snapshot.child("x").val();
+	var y = snapshot.child("y").val();
+	var url= snapshot.child("url").val();
+	
+	if(user==myUser) return;
+	var cursor = getCursor(user);
+	if(url==localURL){
+		if(cursor==null) createCursor(user,x,y);
+		else{
+			updateCursor(cursor,x,y);
+			moveCursor(cursor);
+		}
+	}else{
+		if(cursor!=null) deleteCursor(cursor);
+	}
+});
 
 const coord =  async function(e){
 	if(isSleeping) return;
 	isSleeping = true
-	var cursor = getCursor("Me");
-	var x = e.pageX;
-	var y = e.pageY;
+	database.ref('data/'+myUser).set({
+		x: e.pageX,
+		y: e.pageY,
+		url:localURL
+	});
+	await sleep(interval);
+	isSleeping = false;
+};
+
+function updateCursor(cursor, x, y){
 	cursor.oldX=cursor.x;
 	cursor.oldY=cursor.y;
 	cursor.x=x;
 	cursor.y=y;
-	moveCursor(cursor)
-	await sleep(interval);
-	isSleeping = false;
-};
+}
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -93,14 +97,14 @@ function createCursor(cursorId, cursorX, cursorY){
 	p.appendChild(node);
 	mainDiv.appendChild(img);
 	mainDiv.appendChild(p);
-	var cursor = {id: cursorId, x: cursorX, y: cursorY, oldX: 0, oldY: 0,docElement: mainDiv};
+	var cursor = {id: cursorId, x: cursorX, y: cursorY, oldX: 0, oldY: 0,docElement: mainDiv,};
 	cursorList.push(cursor);
 	document.body.appendChild(mainDiv);
+	moveCursor(cursor);
 }
    
 
-function deleteCursor(cursorId){
-	var cursor = getCursor(cursorId);
+function deleteCursor(cursor){
 	cursorList.splice(cursorList.indexOf(cursor), 1);
 	document.body.removeChild(cursor.docElement);
 }
@@ -137,15 +141,3 @@ function moveCursor(cursor){
 
 
 document.addEventListener('mousemove', coord, true); 
-
-// database.ref('data/olivier').set({
-//             cursorId: cursor.id,
-//             x: cursor.x,
-//             y: cursor.y
-//         }, function(error) {
-//             if (error) {
-//                 console.log(`arf: ${error}`);
-//             } else {
-//                 console.log('what!?');
-//             }
-//         });

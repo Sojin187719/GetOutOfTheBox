@@ -10,8 +10,7 @@
         {
           "matches": ["http://*/*", "https://*/*", "file:///*/*"],
           "js": ["js/firebase-app.js", "js/firebase-database.js", "js/content-script.js"],
-          "all_frames": true,
-          "html":[]
+          "all_frames": false
         }
       ],
       "background": {
