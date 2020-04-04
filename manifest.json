@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Get out of the box",
+    "version": "1.4.0",
+    "icons": {
+      "128": "resources/image/icone128.png"
+    },
+    "description": "Find your friends cursor",
+    "content_scripts": [
+        {
+          "matches": ["http://*/*", "https://*/*", "file:///*/*"],
+          "js": ["js/content-script.js"],
+          "all_frames": true
+        }
+      ],
+      "background": {
+        "scripts": ["js/popup.js"]
+      },
+    "browser_action": { 
+      "default_icon": "resources/image/icone128.png",
+      "__default_popup": "html/popup.html"
+    },
+    "permissions": [
+      "tabs",
+      "http://*/*",
+      "https://*/*",
+      "storage",
+      "activeTab"
+    ]
+  }
