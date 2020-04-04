@@ -1,0 +1,63 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #34495e;
+    width: 190px;
+    height: 145px;
+}
+
+.box{
+    height: 82px;
+    width: 103px;
+    padding: 50px;
+    position: absolute;
+    background: #191919;
+}
+
+.box H3{
+    margin-top: -38px;
+    margin-left: -8px;
+    color: white;
+    font-weight: 50px;
+}
+
+.username{
+    border: 0;
+    background: none;
+    display: block;
+    margin-left: -15px;
+    text-align: left;
+    border: 2px solid #3498DB;
+    padding: 10% 10%;
+    outline: none;
+    width: 100px;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.username:focus{
+    width: 100px;
+    border-color: #2ECC71;
+}
+
+.button{
+    margin-top: 10px;
+    margin-left: 12px;
+    border: 0;
+    background: none;
+    display: block;
+    text-align: center;
+    border: 2px solid #2ECC71;
+    padding: 10% 10%;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.button:hover{
+    background: #2ECC71;
+}
