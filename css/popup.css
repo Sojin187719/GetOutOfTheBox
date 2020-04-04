@@ -10,6 +10,7 @@ body{
 .box{
     height: 82px;
     width: 103px;
+    /* border: 3px solid white; */
     padding: 50px;
     position: absolute;
     background: #191919;

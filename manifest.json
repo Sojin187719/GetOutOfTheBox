@@ -27,6 +27,7 @@
       "http://*/*",
       "https://*/*",
       "storage",
-      "activeTab"
+      "activeTab",
+      "cookies"
     ]
   }
