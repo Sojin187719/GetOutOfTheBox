@@ -1,16 +1,13 @@
-var isSleeping = false;
-var cursorList = [];
-var localURL = location.href;
-var interval = 1000;
-var id = 0;
-var myUser=[""];
+	var isSleeping = false;
+	var cursorList = [];
+	var localURL = location.href;
+	var interval = 1000;
+	var id = 0;
+	var myUser=[""];
 
-chrome.storage.sync.get(['userName'],function(item){
-	myUser = item.userName;
-});
-
-alert("name: " +myUser);
-if(myUser!=null){
+	chrome.storage.sync.get(['userName'],function(item){
+		myUser = item.userName;
+	});
 
 	var firebaseConfig = {
 		apiKey: "AIzaSyBl6wXfdx33ui2MJ5tnTJUkVgmknleZpUU",
@@ -32,7 +29,6 @@ if(myUser!=null){
 		var x = snapshot.child("x").val();
 		var y = snapshot.child("y").val();
 		var url= snapshot.child("url").val();
-		
 		if(user==myUser) return;
 		var cursor = getCursor(user);
 		if(url==localURL){
@@ -48,6 +44,7 @@ if(myUser!=null){
 
 	const coord =  async function(e){
 		if(isSleeping) return;
+		if(myUser==null||myUser=="") return;
 		localURL = location.href;
 		isSleeping = true
 		database.ref('data/'+myUser).set({
@@ -59,6 +56,18 @@ if(myUser!=null){
 		isSleeping = false;
 	};
 
+	document.addEventListener('mousemove', coord, true);
+
+	// window.onbeforeunload = function () {
+	// 	isSleeping=true;
+	// 	database.ref('data/'+myUser).remove();
+	// 	for(i = 0 ; i<cursorList.length ; i++){
+	// 		document.body.removeChild(cursorList[i].docElement);
+	// 	}
+	// 	cursorList.splice(0, cursorList.length);
+	// 	return close;
+	// }
+
 	function updateCursor(cursor, x, y){
 		cursor.oldX=cursor.x;
 		cursor.oldY=cursor.y;
@@ -67,7 +76,7 @@ if(myUser!=null){
 	}
 
 	function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
+		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
 	function getCursor(id) {
@@ -144,15 +153,3 @@ if(myUser!=null){
 			}
 		}
 	}
-	document.addEventListener('mousemove', coord, true);
-
-	window.onbeforeunload = function () {
-		database.ref('data/'+myUser).remove();
-		for(i = 0 ; i<cursorList.length ; i++){
-			document.body.removeChild(cursorList[i].docElement);
-		}
-		cursorList.splice(0, cursorList.length);
-		return close;
-	}
-
-}
