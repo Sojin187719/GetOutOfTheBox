@@ -147,8 +147,8 @@ if(myUser!=undefined && myUser!=""){
 	document.addEventListener('mousemove', coord, true);
 
 	window.onbeforeunload = function () {
-		database.ref('data/'+myUser).set({
-			null
+		database.ref('data').set({
+			myUser:null
 		});
 		return close;
 	}
