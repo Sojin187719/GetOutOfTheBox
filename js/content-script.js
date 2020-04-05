@@ -102,13 +102,8 @@ function createCursor(cursorId, cursorX, cursorY){
 }
    
 
-async function deleteCursor(cursor, url){
+function deleteCursor(cursor, url){
 	cursorList.splice(cursorList.indexOf(cursor), 1);
-	cursor.docElement=document.createElement("a");
-	cursor.docElement.href=url;
-	var node = document.createTextNode(url);
-	cursor.docElement.appendChild(node);
-	await sleep(2000);
 	document.body.removeChild(cursor.docElement);
 }
 
