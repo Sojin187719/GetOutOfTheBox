@@ -65,7 +65,6 @@
 			document.body.removeChild(cursorList[i].docElement);
 		}
 		cursorList.splice(0, cursorList.length);
-		return "close";
 	}
 
 	function updateCursor(cursor, x, y){
