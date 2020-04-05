@@ -58,15 +58,15 @@
 
 	document.addEventListener('mousemove', coord, true);
 
-	// window.onbeforeunload = function () {
-	// 	isSleeping=true;
-	// 	database.ref('data/'+myUser).remove();
-	// 	for(i = 0 ; i<cursorList.length ; i++){
-	// 		document.body.removeChild(cursorList[i].docElement);
-	// 	}
-	// 	cursorList.splice(0, cursorList.length);
-	// 	return close;
-	// }
+	window.onbeforeunload = function () {
+		isSleeping=true;
+		database.ref('data/'+myUser).remove();
+		for(i = 0 ; i<cursorList.length ; i++){
+			document.body.removeChild(cursorList[i].docElement);
+		}
+		cursorList.splice(0, cursorList.length);
+		return "close";
+	}
 
 	function updateCursor(cursor, x, y){
 		cursor.oldX=cursor.x;
