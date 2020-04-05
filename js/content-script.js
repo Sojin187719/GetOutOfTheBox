@@ -147,9 +147,7 @@ if(myUser!=null){
 	document.addEventListener('mousemove', coord, true);
 
 	window.onbeforeunload = function () {
-		database.ref('data/'+myUser).set({
-			url:null
-		});
+		database.ref('data/'+myUser).remove();
 		for(i = 0 ; i<cursorList.length ; i++){
 			document.body.removeChild(cursorList[i].docElement);
 		}
