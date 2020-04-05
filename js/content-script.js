@@ -99,11 +99,13 @@
 		var p = document.createElement("p");
 		p.style.fontSize ="13px";
 		p.style.position ="absolute";
-		p.style.top ="0%";
-		p.style.left ="75%";
+		p.style.top ="85%";
+		p.style.left ="95%";
 		p.style.backgroundColor = 'rgb(0,0,0,0.5)';
 		p.style.bordeRadius="3px";
 		p.style.color="white";
+		p.style.margin=0;
+		p.style.padding=0;
 		var node = document.createTextNode(cursorId);
 		p.appendChild(node);
 		mainDiv.appendChild(img);
