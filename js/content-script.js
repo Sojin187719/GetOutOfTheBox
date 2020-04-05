@@ -91,6 +91,8 @@ function createCursor(cursorId, cursorX, cursorY){
 	p.style.position ="absolute";
 	p.style.top ="0%";
 	p.style.left ="75%";
+	p.style.backgroundColor = 'rgb(0,0,0,0.5)';
+	p.style.bordeRadius="30px";
 	var node = document.createTextNode(cursorId);
 	p.appendChild(node);
 	mainDiv.appendChild(img);
@@ -104,6 +106,8 @@ function createCursor(cursorId, cursorX, cursorY){
 
 function deleteCursor(cursor, url){
 	cursorList.splice(cursorList.indexOf(cursor), 1);
+	cursor.docElement.innerHTML("<a href='"+url+"'>"+url+"</a>")
+	await sleep(2000);
 	document.body.removeChild(cursor.docElement);
 }
 
