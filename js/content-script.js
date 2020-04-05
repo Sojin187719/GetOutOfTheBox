@@ -3,13 +3,14 @@ var cursorList = [];
 var localURL = location.href;
 var interval = 1000;
 var id = 0;
-var myUser= [""] ;
+var myUser=[""];
 
 chrome.storage.sync.get(['userName'],function(item){
 	myUser = item.userName;
 });
 
-if(myUser!=undefined && myUser!=""){
+alert("name: " +myUser);
+if(myUser!=null){
 
 	var firebaseConfig = {
 		apiKey: "AIzaSyBl6wXfdx33ui2MJ5tnTJUkVgmknleZpUU",
@@ -146,9 +147,13 @@ if(myUser!=undefined && myUser!=""){
 	document.addEventListener('mousemove', coord, true);
 
 	window.onbeforeunload = function () {
-		database.ref('data').set({
-			myUser:null
+		database.ref('data/'+myUser).set({
+			url:null
 		});
+		for(i = 0 ; i<cursorList.length ; i++){
+			document.body.removeChild(cursorList[i].docElement);
+		}
+		cursorList.splice(cursorList.indexOf(cursor), cursorList.length);
 		return close;
 	}
 
