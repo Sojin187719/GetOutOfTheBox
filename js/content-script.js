@@ -108,8 +108,8 @@ function createCursor(cursorId, cursorX, cursorY){
 async function deleteCursor(cursor, url){
 	cursorList.splice(cursorList.indexOf(cursor), 1);
 	cursor.docElement.innerHTML = "<a href='"+url+"'>"+url+"</a>";
-	mainDiv.style.pointerEvents="auto";
-	await sleep(10000);
+	cursor.docElement.style.pointerEvents="auto";
+	await sleep(2500);
 	document.body.removeChild(cursor.docElement);
 }
 
