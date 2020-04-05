@@ -1,6 +1,7 @@
 	var isSleeping = false;
 	var cursorList = [];
 	var localURL = location.href;
+	var oldURL="";
 	var interval = 1000;
 	var id = 0;
 	var myUser=[""];
@@ -45,6 +46,7 @@
 	const coord =  async function(e){
 		if(isSleeping) return;
 		if(myUser==null||myUser=="") return;
+		oldURL = localURL;
 		localURL = location.href;
 		isSleeping = true
 		database.ref('data/'+myUser).set({
@@ -52,20 +54,27 @@
 			y: e.pageY,
 			url:localURL
 		});
+		if(oldURL!=localURL){
+			database.ref('data/'+myUser).remove();
+			for(i = 0 ; i<cursorList.length ; i++){
+				document.body.removeChild(cursorList[i].docElement);
+			}
+			cursorList.splice(0, cursorList.length);
+		}
 		await sleep(interval);
 		isSleeping = false;
 	};
 
 	document.addEventListener('mousemove', coord, true);
 
-	window.onbeforeunload = function () {
-		isSleeping=true;
-		database.ref('data/'+myUser).remove();
-		for(i = 0 ; i<cursorList.length ; i++){
-			document.body.removeChild(cursorList[i].docElement);
-		}
-		cursorList.splice(0, cursorList.length);
-	}
+	// window.onbeforeunload = function () {
+	// 	isSleeping=true;
+	// 	database.ref('data/'+myUser).remove();
+	// 	for(i = 0 ; i<cursorList.length ; i++){
+	// 		document.body.removeChild(cursorList[i].docElement);
+	// 	}
+	// 	cursorList.splice(0, cursorList.length);
+	// }
 
 	function updateCursor(cursor, x, y){
 		cursor.oldX=cursor.x;
