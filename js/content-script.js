@@ -5,12 +5,11 @@ var interval = 1000;
 var id = 0;
 var myUser= [""] ;
 
+chrome.storage.sync.get(['userName'],function(item){
+	myUser = item.userName;
+});
+
 if(myUser!=undefined && myUser!=""){
-
-	chrome.storage.sync.get(['userName'],function(item){
-		myUser = item.userName;
-	});
-
 
 	var firebaseConfig = {
 		apiKey: "AIzaSyBl6wXfdx33ui2MJ5tnTJUkVgmknleZpUU",
