@@ -153,7 +153,7 @@ if(myUser!=null){
 		for(i = 0 ; i<cursorList.length ; i++){
 			document.body.removeChild(cursorList[i].docElement);
 		}
-		cursorList.splice(cursorList.indexOf(cursor), cursorList.length);
+		cursorList.splice(0, cursorList.length);
 		return close;
 	}
 
