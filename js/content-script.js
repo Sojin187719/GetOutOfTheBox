@@ -3,14 +3,11 @@ var cursorList = [];
 var localURL = location.href;
 var interval = 1000;
 var id = 0;
-var myUser= [""] ;
+var myUser= ["default"] ;
 
 chrome.storage.sync.get(['userName'],function(item){
     myUser = item.userName;
 });
-
-
-
 
 
 var firebaseConfig = {
@@ -43,12 +40,13 @@ ref.on('child_changed', function(snapshot, data) {
 			moveCursor(cursor);
 		}
 	}else{
-		if(cursor!=null) deleteCursor(cursor);
+		if(cursor!=null) deleteCursor(cursor, url);
 	}
 });
 
 const coord =  async function(e){
 	if(isSleeping) return;
+	localURL = location.href;
 	isSleeping = true
 	database.ref('data/'+myUser).set({
 		x: e.pageX,
@@ -104,8 +102,13 @@ function createCursor(cursorId, cursorX, cursorY){
 }
    
 
-function deleteCursor(cursor){
+async function deleteCursor(cursor, url){
 	cursorList.splice(cursorList.indexOf(cursor), 1);
+	cursor.docElement=document.createElement("a");
+	cursor.docElement.href=url;
+	var node = document.createTextNode(url);
+	cursor.docElement.appendChild(node);
+	await sleep(2000);
 	document.body.removeChild(cursor.docElement);
 }
 
@@ -138,6 +141,4 @@ function moveCursor(cursor){
 		}
 	}
 }
-
-
 document.addEventListener('mousemove', coord, true); 
