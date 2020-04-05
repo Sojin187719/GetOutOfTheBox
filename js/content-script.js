@@ -119,7 +119,7 @@
 		cursorList.splice(cursorList.indexOf(cursor), 1);
 		cursor.docElement.innerHTML = "<a href='"+url+"'><img width='40px' heigth='auto' src='https://www.signalisation.ma/media/catalog/product/cache/1/image/285x285/9df78eab33525d08d6e5fb8d27136e95/s/o/sortie-et-issue-de-secours--porte-a-gauche-en-bas--_3.png' title='"+url+"'/></a>";
 		cursor.docElement.style.pointerEvents="auto";
-		await sleep(3500);
+		await sleep(5000);
 		document.body.removeChild(cursor.docElement);
 	}
 
