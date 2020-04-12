@@ -1,6 +1,3 @@
-<?php
-    $user = $_GET['u'];
-?>
 <html>
     <head>
         <link rel='stylesheet' type='text/css' href="chat.css"/>
@@ -10,18 +7,16 @@
     <body>
         <div class='chatContainer'>
             <div class="chatHeader">
-                <h3>Bienvenue <?php echo ucwords($user); ?></h3>
+                <h3>Bienvenue></h3>
             </div>
             <div class="chatMessages"></div>
             <div class="chatBottom">
-                <form action="#" onsubmit="return false;" id="chatForm">
-                    <input type="hidden" id="name" value="<?php echo $user; ?>"/>
+                <form action="#" onsubmit="" id="chatForm">
+                    <input type="hidden" id="name" value=""/>
                     <input type="text" name="text" id="text" value="" placeholder="entre ton message"/>
-                    <input type="submit" name="submit" value="Post"/>
+                    <input type="button" name="submit" value="Post"/>
                 </form>
             </div>
         </div>  
-        
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </body>
 </html>
